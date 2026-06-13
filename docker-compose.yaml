@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres-alpine:17
+    container_name: db
+    ports:
+      - "5432:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: 0.5
+          memory: 600M
+    environment:
+      POSTGRES_DB: ${PG_DATABASE:-postgres}
+      POSTGRES_USER: ${PG_USER:-postgres}
+      POSTGRES_PASSWORD: ${PG_PASSWORD:-postgres}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data:
