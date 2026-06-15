@@ -12,14 +12,16 @@ import io.github.responsekit.core.PagedResponse
 import io.github.responsekit.quarkus.PagedResponseFactory
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.persistence.EntityManager
+import jakarta.transaction.Transactional
+import jakarta.ws.rs.BadRequestException
+import jakarta.ws.rs.NotFoundException
+import java.time.Instant
 import java.util.UUID
 
 @ApplicationScoped
 class ProductService (
     private val productRepository: ProductRepository,
-    private val productCategoryRepository: ProductCategoryRepository,
     private val productMapper: ProductMapper,
-    private val productResource: ProductResource,
     private val entityManager: EntityManager
 ){
 
@@ -30,17 +32,26 @@ class ProductService (
         )
     }
 
-    fun getById(id: UUID): ProductResponse {}
-
-    fun create(request: CreateProductRequest): ProductResponse {
-        val product: Product = Product()
-
-        product.name = request.name
-        product.description = request.description
-        product.category = entityManager.getReference(ProductCategory::class.java, request.categoryId)
-
+    fun getById(id: UUID): ProductResponse {
         return productMapper.toResponse(
-            productRepository
+            productRepository.findById(id)
+                    ?: throw NotFoundException("Product not found by ID: $id")
         )
+    }
+
+    @Transactional
+    fun create(request: CreateProductRequest): ProductResponse {
+        if (productRepository.existsByName(request.name))
+            throw BadRequestException("Name already exists: ${request.name}")
+
+        val product = Product(
+            name = request.name,
+            description = request.description,
+            category = entityManager.getReference(ProductCategory::class.java, request.categoryId)
+        )
+
+        productRepository.persist(product)
+
+        return productMapper.toResponse(product)
     }
 }

@@ -9,7 +9,7 @@ import java.util.UUID
 
 @Entity @Table(name = "product_category")
 class ProductCategory (
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
-    var id: Long,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int,
     var name: String
 )

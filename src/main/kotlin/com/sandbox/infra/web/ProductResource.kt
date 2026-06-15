@@ -5,22 +5,16 @@ import com.sandbox.application.dto.ProductResponse
 import com.sandbox.application.service.ProductService
 import io.github.responsekit.core.PagedResponse
 import io.github.responsekit.core.StandardResponse
-import jakarta.persistence.PostLoad
-import jakarta.ws.rs.DefaultValue
-import jakarta.ws.rs.GET
-import jakarta.ws.rs.POST
-import jakarta.ws.rs.Path
-import jakarta.ws.rs.Produces
+import jakarta.ws.rs.*
 import jakarta.ws.rs.core.MediaType
-import jakarta.ws.rs.core.Response
-import org.hibernate.annotations.CreationTimestamp
 import org.jboss.resteasy.reactive.RestPath
 import org.jboss.resteasy.reactive.RestQuery
 import org.jboss.resteasy.reactive.RestResponse
-import java.util.UUID
+import java.util.*
 
 @Path("/products")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 class ProductResource (
     private val productService: ProductService
 ){

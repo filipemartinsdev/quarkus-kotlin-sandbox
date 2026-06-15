@@ -1,5 +1,6 @@
 package com.sandbox.application.service.mapper
 
+import com.sandbox.application.dto.CreateProductRequest
 import com.sandbox.application.dto.ProductCategoryResponse
 import com.sandbox.application.dto.ProductResponse
 import com.sandbox.domain.Product

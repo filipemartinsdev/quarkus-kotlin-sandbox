@@ -33,6 +33,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-kotlin</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>io.github.filipemartinsdev</groupId>
             <artifactId>responsekit-quarkus</artifactId>
             <version>0.3.3</version>
@@ -165,7 +170,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <jvmTarget>1.8</jvmTarget>
+                    <jvmTarget>25</jvmTarget>
                     <compilerPlugins>
                         <plugin>jpa</plugin>
                     </compilerPlugins>

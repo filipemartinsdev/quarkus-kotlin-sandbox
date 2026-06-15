@@ -1,7 +1,10 @@
 package com.sandbox.application.dto
 
+import jakarta.validation.constraints.NotEmpty
+
+@JvmRecord
 data class CreateProductRequest(
-    val name: String,
+    val name: @NotEmpty String,
     val description: String?,
-    val categoryId: Long
+    val categoryId: Int
 )
